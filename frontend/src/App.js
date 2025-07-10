@@ -19,7 +19,7 @@ function App() {
   });
   const [message, setMessage] = useState('');
 
-  const API_URL ='http://localhost:5000/api';
+  const API_URL = 'http://localhost:5000/api';
 
   useEffect(() => {
     if (loggedIn) {
@@ -37,17 +37,30 @@ function App() {
     }
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${API_URL}/login`, loginData);
-      setMessage(response.data.message);
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post(
+      `${API_URL}/login`,
+      loginData,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    
+    if (response.data.message === 'Login successful') {
+      setMessage('Login successful');
       setLoggedIn(true);
-    } catch (error) {
+    } else {
       setMessage('Invalid credentials');
-      console.error(error);
     }
-  };
+  } catch (error) {
+    setMessage(error.response?.data?.error || 'Login failed');
+    console.error('Login error:', error);
+  }
+};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
