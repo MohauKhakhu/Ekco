@@ -9,7 +9,7 @@ const port = process.env.PORT || 5000;
 const pool = new Pool({
   user: process.env.DB_USER || 'postgres',
   host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'ekco_assessment',
+  database: process.env.DB_NAME || 'EKCO',
   password: process.env.DB_PASSWORD || 'password',
   port: process.env.DB_PORT || 5432,
   connectionTimeoutMillis: 5000,
@@ -44,9 +44,7 @@ const validateUserData = (req, res, next) => {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date_of_birth)) {
-    return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
-  }
+
 
   next();
 };
@@ -195,13 +193,12 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Error handling middleware
+// Error handling 
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
   res.status(500).json({ error: 'An unexpected error occurred' });
 });
 
-// Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);

@@ -12,7 +12,7 @@ This repository contains the solution for the Ekco candidate assessment, consist
 
 ### 1. Database Setup
 
-1. Create a PostgreSQL database named `ekco_assessment`
+1. Create a PostgreSQL database named `ekco`
 2. Run the SQL scripts in the `sql/` folder in order:
    - `01_create_tables.sql`
    - `02_populate_data.sql`
